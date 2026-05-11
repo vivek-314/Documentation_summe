@@ -8,4 +8,9 @@ It defines how data is formatted transmitted and received between devices connec
 Ethernet operated at 
   - Physical layer and 
   - Data link layer
+of Open Systems Interconnection (OSI) model which is a standardize 7 stage model use for networking functions, allowing diverse communication systems to communicate.
 
+Daily Devices whicih use ethernet are computers, routers, FPGA boards etc.
+
+Here is a image giving a small brief of OSI model for refernece.
+![OSI Model]((https://www.imperva.com/learn/wp-content/uploads/sites/13/2020/02/OSI-7-layers.jpg))
