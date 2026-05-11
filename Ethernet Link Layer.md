@@ -43,14 +43,14 @@ Data at this layer is refered as **Frame**
 Let's us look at frame structure one by one.
 
 ## Preamble
-It is a 7 bit alternating pattern of 1's and 0's [1010101..] which gives a heads up to the reciving end about incoming data. It allows the sender and reciver to establish bit synchronization. It allows the receiver to lock onto the data stream before the actual frame begins.
+It is a 7 byte alternating pattern of 1's and 0's [1010101..] which gives a heads up to the reciving end about incoming data. It allows the sender and reciver to establish bit synchronization. It allows the receiver to lock onto the data stream before the actual frame begins.
 
 ## SFD - Start of frame delimiter 
-It is a 1 bit field set to 10101011. It indicates the next bits are actual start of the frame after the preamble ends.
+It is a 1 byte field set to 10101011. It indicates the next bits are actual start of the frame after the preamble ends.
 
 [ MAC address
 It is a local address with all devices. A 48 bit hardware address assigned to all network devices.
-Represented by 12 hexadecimal. 
+Represented by 12 hexadecimal digits. 
 Eg. 00:1B:2C:5D:3E:2A ]
 
 ## Destination Address
@@ -67,7 +67,18 @@ Also known as **payload** as actual transmitted data is inserted here.
 Max payload = 1500 bytes 
 Min payload = 46 byte (if data is less than min payload then 0 padding is used to match the criteria)
 
-## CRC - Cyclic Reductancy Check
+## CRC - Cyclic Redundancy Check
 It is used for error deetection. 
 Sender computes a checksum and attaches it to the fram the reciver would recalculte the checksum if both matches frame accepted otherwise discardes.
+
+# How data is transfered in **Etherenet**?
+
+1) Source will generate the data
+2) Transport it to the network layer add a header 
+3) Etherenet layer will convert this data into fram to transport.
+4) Source and Destination MAC addresses are attached 
+5) CRC is calculated and attahted 
+6) Data travels through cable 
+7) The reciving end will check CRC 
+8) It is matches the data is successfully transferred if not then the data is rejected.
 
