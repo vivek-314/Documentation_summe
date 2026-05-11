@@ -51,7 +51,11 @@ It is a 1 byte field set to 10101011. It indicates the next bits are actual star
 [ MAC address
 It is a local address with all devices. A 48 bit hardware address assigned to all network devices.
 Represented by 12 hexadecimal digits. 
-Eg. 00:1B:2C:5D:3E:2A ]
+Eg. 00:1B:2C:5D:3E:2A 
+Ehternet has unicast which allows only send data to one MAC address
+Multicast allows to send data to few specific devices
+Broadcast will send data to every device on that network
+]
 
 ## Destination Address
 It is a 6 byte field containing  MAC address of the destination machine.
@@ -82,3 +86,28 @@ Sender computes a checksum and attaches it to the fram the reciver would recalcu
 7) The reciving end will check CRC 
 8) It is matches the data is successfully transferred if not then the data is rejected.
 
+![Data trasfer flowchart](Data_transfer.png)
+
+### There is switch whic store MAC table and forward data to correct port.
+
+# Duplex mode
+ There are two types of duplex
+  1) Half Duplex allows only one direction at a time if multiple data needs to be transmit there will be collision
+  2) Full Duplex allows 2 way communication, no collision and faster data transmmission.
+
+#These collisions are detected by CSMA/CD protocol 
+
+It will check if sender is ready to send the data and then send a dummy data on line if there is no collision real data will be transmitted but if there is a collision the system will jam the data. Wait for some time (random) again follow the same process.
+
+This method slows down the transmission speed, hence it is not in work anymore mordern  ethernet uses Full Duplex with both way transmission.
+
+
+ ## For data transfer the cables used are **Twisted pair cable** and **Fiber optic cable**
+
+ #Limitations of Ethernet
+  -Limited cable length
+  -Possible damage to cable can cause whole network to shut down
+  -Requires switches/routers for larger networks.
+
+### Ethernet is one of the greatest wired technology prviding a high-speed and reliable data transfer using frame based communication at link layer.
+It's PHY (physical layer device) and MAC (media access control) interfaces together are foundation of many hardware application based on network communication
