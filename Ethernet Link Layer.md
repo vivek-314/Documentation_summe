@@ -14,15 +14,15 @@ Daily Devices whicih use ethernet are computers, routers, FPGA boards etc.
 
 ## Why ethernet is used
   -Because it provides
-        -High speed coomunicationa and data transfer.
-        -Low cost
-        -standardize data transfer protocols
-        -Easy scalable
+    -High speed coomunicationa and data transfer.
+    -Low cost
+    -standardize data transfer protocols
+    -Easy scalable
   - Main use of ethernet was seen in
-        -Internet communication
-        -Data centers
-        -Industrial automation
-        -FPGA based networking system
+    -Internet communication
+    -Data centers
+    -Industrial automation
+    -FPGA based networking system
 
 Here is a image giving a small brief of OSI model for refernece.
 ![OSI Model](OSI-7-layers.jpg)
@@ -33,11 +33,24 @@ It is responsible for
   - Framing data
   - MAC addressing
   - Error detection
-  - Media accesscontrol
+  - Media access control
+
 Data at this layer is refered as **Frame**
 
 ### **Ethernet Fream Structure**
 ![Frame Strcture](framestructure.png)
 
+Let's us look at frame structure one by one.
+
+## Preamble
+It is a 7 bit alternating pattern of 1's and 0's [1010101..] which gives a heads up to the reciving end about incoming data. It allows the sender and reciver to establish bit synchronization. It allows the receiver to lock onto the data stream before the actual frame begins.
+
+## SFD - Start of frame delimiter 
+It is a 1 bit field set to 10101011. It indicates the next bits are actual start of the frame after the preamble ends.
+
+[ ## MAC address
+It is a local address with all devices. A 48 bit hardware address assigned to all network devices.
+Represented by 12 hexadecimal. 
+Eg. 00:1B:2C:5D:3E:2A ]
 
 
