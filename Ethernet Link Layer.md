@@ -25,7 +25,7 @@ Daily Devices whicih use ethernet are computers, routers, FPGA boards etc.
         -FPGA based networking system
 
 Here is a image giving a small brief of OSI model for refernece.
-![OSI Model]((OSI-7-layers.jpg))
+![OSI Model](OSI-7-layers.jpg)
 
 ## What Ethernet link layer does?
 
@@ -37,4 +37,5 @@ It is responsible for
 Data at this layer is refered as **Frame**
 
 ### **Ethernet Fream Structure**
-| Preamble | Dest MAC | Src MAC | EtherType | Payload | CRC |
+![Frame Strcture] (framestructure.png)
+
