@@ -48,16 +48,15 @@ It is a 7 byte alternating pattern of 1's and 0's [1010101..] which gives a head
 ## SFD - Start of frame delimiter 
 It is a 1 byte field set to 10101011. It indicates the next bits are actual start of the frame after the preamble ends.
 
-[ MAC address
+## Destination Address
+[MAC address
 It is a local address with all devices. A 48 bit hardware address assigned to all network devices.
 Represented by 12 hexadecimal digits. 
 Eg. 00:1B:2C:5D:3E:2A 
 Ehternet has unicast which allows only send data to one MAC address
 Multicast allows to send data to few specific devices
-Broadcast will send data to every device on that network
-]
+Broadcast will send data to every device on that network]
 
-## Destination Address
 It is a 6 byte field containing  MAC address of the destination machine.
 
 ## Source Address
@@ -95,7 +94,7 @@ Sender computes a checksum and attaches it to the fram the reciver would recalcu
   1) Half Duplex allows only one direction at a time if multiple data needs to be transmit there will be collision
   2) Full Duplex allows 2 way communication, no collision and faster data transmmission.
 
-#These collisions are detected by CSMA/CD protocol 
+# These collisions are detected by **CSMA/CD** protocol 
 
 It will check if sender is ready to send the data and then send a dummy data on line if there is no collision real data will be transmitted but if there is a collision the system will jam the data. Wait for some time (random) again follow the same process.
 
@@ -104,10 +103,9 @@ This method slows down the transmission speed, hence it is not in work anymore m
 
  ## For data transfer the cables used are **Twisted pair cable** and **Fiber optic cable**
 
- #Limitations of Ethernet
+ # Limitations of Ethernet
   -Limited cable length
   -Possible damage to cable can cause whole network to shut down
   -Requires switches/routers for larger networks.
 
-### Ethernet is one of the greatest wired technology prviding a high-speed and reliable data transfer using frame based communication at link layer.
-It's PHY (physical layer device) and MAC (media access control) interfaces together are foundation of many hardware application based on network communication
+### Ethernet is one of the greatest wired technology prviding a high-speed and reliable data transfer using frame based communication at link layer. It's PHY (physical layer device) and MAC (media access control) interfaces together are foundation of many hardware application based on network communication
