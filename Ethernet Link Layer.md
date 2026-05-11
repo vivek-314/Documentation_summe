@@ -106,8 +106,8 @@ This method slows down the transmission speed, hence it is not in work anymore m
  ## For data transfer the cables used are **Twisted pair cable** and **Fiber optic cable**
 
  # Limitations of Ethernet
-  -Limited cable length
-  -Possible damage to cable can cause whole network to shut down
-  -Requires switches/routers for larger networks.
+  - Limited cable length
+  - Possible damage to cable can cause whole network to shut down
+  - Requires switches/routers for larger networks.
 
 ### Ethernet is one of the greatest wired technology prviding a high-speed and reliable data transfer using frame based communication at link layer. It's PHY (physical layer device) and MAC (media access control) interfaces together are foundation of many hardware application based on network communication
