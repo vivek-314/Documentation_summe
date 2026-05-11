@@ -13,18 +13,20 @@ of Open Systems Interconnection (OSI) model which is a standardize 7 stage model
 Daily Devices whicih use ethernet are computers, routers, FPGA boards etc.
 
 ## Why ethernet is used
-  -Because it provides
-    -High speed coomunicationa and data transfer.
-    -Low cost
-    -standardize data transfer protocols
-    -Easy scalable
+
+  - Because it provides
+    - High speed coomunicationa and data transfer.
+    - Low cost
+    - standardize data transfer protocols
+    - Easy scalable
   - Main use of ethernet was seen in
-    -Internet communication
-    -Data centers
-    -Industrial automation
-    -FPGA based networking system
+    - Internet communication
+    - Data centers
+    - Industrial automation
+    - FPGA based networking system
 
 Here is a image giving a small brief of OSI model for refernece.
+
 ![OSI Model](OSI-7-layers.jpg)
 
 ## What Ethernet link layer does?
