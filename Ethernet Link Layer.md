@@ -48,9 +48,26 @@ It is a 7 bit alternating pattern of 1's and 0's [1010101..] which gives a heads
 ## SFD - Start of frame delimiter 
 It is a 1 bit field set to 10101011. It indicates the next bits are actual start of the frame after the preamble ends.
 
-[ ## MAC address
+[ MAC address
 It is a local address with all devices. A 48 bit hardware address assigned to all network devices.
 Represented by 12 hexadecimal. 
 Eg. 00:1B:2C:5D:3E:2A ]
 
+## Destination Address
+It is a 6 byte field containing  MAC address of the destination machine.
+
+## Source Address
+It is a 6 bytet field containing MAC address of the source machine. (The least significant bit of the first byte is always 0)
+
+## Length 
+It is a 2 byte field specifying length of the payload
+
+## Data 
+Also known as **payload** as actual transmitted data is inserted here.
+Max payload = 1500 bytes 
+Min payload = 46 byte (if data is less than min payload then 0 padding is used to match the criteria)
+
+## CRC - Cyclic Reductancy Check
+It is used for error deetection. 
+Sender computes a checksum and attaches it to the fram the reciver would recalculte the checksum if both matches frame accepted otherwise discardes.
 
