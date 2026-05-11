@@ -13,4 +13,4 @@ of Open Systems Interconnection (OSI) model which is a standardize 7 stage model
 Daily Devices whicih use ethernet are computers, routers, FPGA boards etc.
 
 Here is a image giving a small brief of OSI model for refernece.
-![OSI Model]((https://www.imperva.com/learn/wp-content/uploads/sites/13/2020/02/OSI-7-layers.jpg))
+![OSI Model]((OSI-7-layers.jpg))
