@@ -111,3 +111,22 @@ This method slows down the transmission speed, hence it is not in work anymore m
   - Requires switches/routers for larger networks.
 
 ### Ethernet is one of the greatest wired technology prviding a high-speed and reliable data transfer using frame based communication at link layer. It's PHY (physical layer device) and MAC (media access control) interfaces together are foundation of many hardware application based on network communication
+
+
+# Raw Socket
+
+Applications communicate with each other using high level protocols such as TCP(Transfer control protocol) and UDP(User Datagram Protocol). Raw socket allows direct access to low-level network packets and ethernet frames.
+
+Socket use to ocmmunicate with each other in raw socket we need to do all the operation manually that is..
+You need to open each socket, build each layer, turn it into bytes, send the packet, recieve packet manually and handle it.
+
+Raw socket bypass some operating system protocol processing.
+Raw sockets allow programmers to:
+  - Manually create packets
+  - Access Ethernet headers
+  - Read MAC addresses
+  - Implement custom protocols
+  - Analyze packets directly
+
+## OS specific Socket settings
+
