@@ -347,5 +347,4 @@ module tb_dual_port_bram;
         $finish;
 
     end
-
 endmodule
