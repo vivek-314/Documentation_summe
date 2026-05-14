@@ -71,7 +71,7 @@ Both ports try to write different data to the same address simultaneously. This 
 One port tries to write to an address while the other port tries to read from it. Depending on how the BRAM is configured (Write-First or Read-First mode), the reading port will either receive the old data or the newly written data.
 
 
-# How to use BRAM in FPGA.
+# How to use BRAM in Verilog.
 
 ### 1) Single Port BRAM
 Here is the code for read and write demonstration for single port Bram write or read can happen one at a time.
