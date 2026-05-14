@@ -59,6 +59,7 @@ The memory can handle two separate operations simultaneously in a single clock c
 
 **Common Use Cases:**
   - **FIFO (First-In, First-Out) Buffers:** Passing data safely between two distinct processing systems running on different clock speeds.
+  - 
 ![fifo bram](fifobram.png)
   - **Video Frame Buffers:** A camera interface writes incoming pixels into Port A, while a display controller pulls pixels out of Port B to draw the image on a screen.
   - **Shared Processor Memory:** Allowing a hardware accelerator and an embedded CPU core to read and update the same data table concurrently.
@@ -72,7 +73,7 @@ One port tries to write to an address while the other port tries to read from it
 
 # How to use BRAM in FPGA.
 
-### Single Port BRAM
+### 1) Single Port BRAM
 Here is the code for read and write demonstration for single port Bram write or read can happen one at a time.
 Verilog code 
 
@@ -166,7 +167,7 @@ endmodule
 
 
 
-### Dual Port BRAM
+### 2) Dual Port BRAM
 Here is a code for demonstrating dual port bram on simulation
 similar to the single port just we have to doen same code for 2 ports 
 
