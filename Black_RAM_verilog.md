@@ -24,3 +24,20 @@ Using registers for large memory is waste of FPGA logic resources.
     - **The Waste**: This often leads to compile errors (Fitting/Routing failures) where the design simply will not fit on the chip, forcing you to buy a larger, more expensive FPGA.
     - **The BRAM Solution**: The compiler drops the data into a single, pre-defined BRAM slot instantly, guaranteeing a successful build with minimal software effort.
 
+
+Generally BRAMs wok with a clock signal.
+   - Read and write occur on clock edges.
+   - Output is usually available after 1 cycle.
+
+## Single Port BRAM
+A Single-Port BRAM features only one shared interface to access the memory array. This interface consists of one clock line, one address bus, one data input bus, one data output bus, and a write enable signal.
+
+!(Single port data image)[singleportbram.png]
+    
+
+
+
+
+
+
+
