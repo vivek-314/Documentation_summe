@@ -71,3 +71,281 @@ One port tries to write to an address while the other port tries to read from it
 
 
 # How to use BRAM in FPGA.
+
+### Single Port BRAM
+Here is the code for read and write demonstration for single port Bram write or read can happen one at a time.
+Verilog code 
+
+module block_ram (
+    input wire clk,
+    input wire we,
+    input wire [7:0] addr,
+    input wire [7:0] din,
+    output reg [7:0] dout
+);
+
+    // Memory declaration
+    reg [7:0] memory [255:0];                There are 256 memory locations with each having 8 bits
+
+    always @(posedge clk) begin
+        
+        // Write operation
+        if (we)                              if we ==1 then on positive edge din will be stored at addr
+            memory[addr] <= din;
+
+        // Read operation                    data stored at addr will appears aur dout
+        dout <= memory[addr];
+    end
+
+endmodule
+
+Testbench
+
+`timescale 1ns / 1ps
+module tb_block_ram;
+    // Inputs
+    reg clk;
+    reg we;
+    reg [7:0] addr;
+    reg [7:0] din;
+
+    wire [7:0] dout;                // Output
+
+    block_ram uut (.clk(clk),.we(we),.addr(addr),.din(din),.dout(dout));
+
+    // Clock generation
+    always #5 clk = ~clk;
+    initial begin
+        // Initialize signals
+        clk  = 0;
+        we   = 0;
+        addr = 0;
+        din  = 0;
+        
+        // =====================================
+        // Test 1: Write data to address 5
+        #10;
+        we   = 1;
+        addr = 8'd5;
+        din  = 8'hAA;   // 10101010
+        #10;
+        // Stop writing
+        we = 0;
+
+        // =====================================
+        // Test 2: Read data from address 5
+        addr = 8'd5;
+        #10;
+        $display("Address 5 Data = %h", dout);
+
+        // =====================================
+        // Test 3: Write another value
+        we   = 1;
+        addr = 8'd10;
+        din  = 8'h55;   // 01010101
+        #10;
+        we = 0;
+        // =====================================
+        // Test 4: Read from address 10
+        addr = 8'd10;
+        #10;
+        $display("Address 10 Data = %h", dout);
+        
+        // =====================================
+        // Test 5: Read previous address again
+        addr = 8'd5;
+        #10;
+        $display("Address 5 Data Again = %h", dout);
+
+        // Finish simulation
+        #20;
+        $finish;
+    end
+endmodule
+
+
+
+
+### Dual Port BRAM
+Here is a code for demonstrating dual port bram on simulation
+similar to the single port just we have to doen same code for 2 ports 
+
+module dual_port_bram (
+    input wire clk,
+
+    // Port A
+    input wire we_a,
+    input wire [7:0] addr_a,
+    input wire [7:0] din_a,
+    output reg [7:0] dout_a,
+
+    // Port B
+    input wire we_b,
+    input wire [7:0] addr_b,
+    input wire [7:0] din_b,
+    output reg [7:0] dout_b
+);
+
+    reg [7:0] memory [255:0];
+
+    always @(posedge clk) begin
+
+        // Port A
+        if (we_a)
+            memory[addr_a] <= din_a;
+
+        dout_a <= memory[addr_a];
+
+        // Port B
+        if (we_b)
+            memory[addr_b] <= din_b;
+
+        dout_b <= memory[addr_b];
+    end
+
+endmodule
+
+
+Testbench 
+
+`timescale 1ns / 1ps
+
+module tb_dual_port_bram;
+
+    // Inputs
+    reg clk;
+
+    // Port A
+    reg we_a;
+    reg [7:0] addr_a;
+    reg [7:0] din_a;
+    wire [7:0] dout_a;
+
+    // Port B
+    reg we_b;
+    reg [7:0] addr_b;
+    reg [7:0] din_b;
+    wire [7:0] dout_b;
+
+    // Instantiate DUT
+    dual_port_bram uut (
+        .clk(clk),
+
+        .we_a(we_a),
+        .addr_a(addr_a),
+        .din_a(din_a),
+        .dout_a(dout_a),
+
+        .we_b(we_b),
+        .addr_b(addr_b),
+        .din_b(din_b),
+        .dout_b(dout_b)
+    );
+
+    // Clock generation
+    always #5 clk = ~clk;
+
+    initial begin
+
+        // Initialize signals
+        clk    = 0;
+
+        we_a   = 0;
+        addr_a = 0;
+        din_a  = 0;
+
+        we_b   = 0;
+        addr_b = 0;
+        din_b  = 0;
+
+        // =========================================
+        // Test 1: Write using Port A
+        // =========================================
+
+        #10;
+
+        we_a   = 1;
+        addr_a = 8'd10;
+        din_a  = 8'hAA;
+
+        #10;
+
+        we_a = 0;
+
+        // Read using Port A
+        addr_a = 8'd10;
+
+        #10;
+
+        $display("Port A Read Address 10 = %h", dout_a);
+
+        // =========================================
+        // Test 2: Write using Port B
+        // =========================================
+
+        we_b   = 1;
+        addr_b = 8'd20;
+        din_b  = 8'h55;
+
+        #10;
+
+        we_b = 0;
+
+        // Read using Port B
+        addr_b = 8'd20;
+
+        #10;
+
+        $display("Port B Read Address 20 = %h", dout_b);
+
+        // =========================================
+        // Test 3: Simultaneous Write                  ### here when both data are given the system is confused if it have to read the previous value or new till the commance was given to it 
+        // =========================================
+
+        we_a   = 1;
+        addr_a = 8'd30;
+        din_a  = 8'hF0;
+
+        we_b   = 1;
+        addr_b = 8'd40;
+        din_b  = 8'h0F;
+
+        #10;
+
+        we_a = 0;
+        we_b = 0;
+
+        // Read both addresses simultaneously
+        addr_a = 8'd30;
+        addr_b = 8'd40;
+
+        #10;
+
+        $display("Port A Read Address 30 = %h", dout_a);
+        $display("Port B Read Address 40 = %h", dout_b);
+
+        // =========================================
+        // Test 4: Cross-Port Read
+        // =========================================
+
+        // Read Port B written data from Port A
+        addr_a = 8'd20;
+
+        // Read Port A written data from Port B
+        addr_b = 8'd10;
+
+        #10;
+
+        $display("Port A Read Address 20 = %h", dout_a);
+        $display("Port B Read Address 10 = %h", dout_b);
+
+        // =========================================
+        // Finish simulation
+        // =========================================
+
+        #20;
+        $finish;
+
+    end
+
+endmodule
