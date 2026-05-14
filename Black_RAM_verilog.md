@@ -63,4 +63,11 @@ The memory can handle two separate operations simultaneously in a single clock c
   - **Video Frame Buffers:** A camera interface writes incoming pixels into Port A, while a display controller pulls pixels out of Port B to draw the image on a screen.
   - **Shared Processor Memory:** Allowing a hardware accelerator and an embedded CPU core to read and update the same data table concurrently.
 
+When using a True Dual-Port BRAM, a memory collision occurs if Port A and Port B attempt to access the exact same memory address at the exact same instant.
+**Write-Write Collision:**
+Both ports try to write different data to the same address simultaneously. This results in corrupted, unpredictable data being stored.
+**Read-Write Collision:**
+One port tries to write to an address while the other port tries to read from it. Depending on how the BRAM is configured (Write-First or Read-First mode), the reading port will either receive the old data or the newly written data.
 
+
+# How to use BRAM in FPGA.
