@@ -32,12 +32,34 @@ Generally BRAMs wok with a clock signal.
 ## Single Port BRAM
 A Single-Port BRAM features only one shared interface to access the memory array. This interface consists of one clock line, one address bus, one data input bus, one data output bus, and a write enable signal.
 
-!(Single port data image)[singleportbram.png]
-    
+![Single port data image](singleportbram.png)
 
+**How It Works:** 
+The block can perform only one operation per clock cycle. You can either read from an address or write to an address, but you cannot do both at the same time.
+**Limitations:** If your circuit needs to save new incoming data while simultaneously reading out old data, a single-port BRAM will cause a processing bottleneck.
+**Common Use Cases:** 
+  - Storing permanent microprocessor firmware or initialization boot ROMs.
+  - Storing static calibration data or mathematical lookup tables (e.g., Sine/Cosine tables).
+  - State machine buffers where read and write operations never happen concurrently.
 
+## Dual Port BRAM
 
+A Dual-Port BRAM splits access into two entirely independent interfaces, typically labeled Port A and Port B. Each port has its own distinct set of clock, address, data in, data out, and write enable lines connected to the exact same underlying memory bank.
 
+![dual port bram image](dualportbram.png)
 
+**How It Works:** 
+The memory can handle two separate operations simultaneously in a single clock cycle. Port A can write data to Address 5 while Port B simultaneously reads data from Address 100.
+
+**True vs. Simple Dual-Port:**
+  - Simple Dual-Port (SDP): Port A is strictly reserved for writing data, and Port B is strictly reserved for reading data.
+  - True Dual-Port (TDP): Both Port A and Port B can independently perform both read and write operations at the same time.
+**Clock Domain Crossing (CDC):**
+ Because Port A and Port B have completely separate clock pins, they can run at different frequencies. Data can be written into Port A at 100 MHz from one circuit component, and read out of Port B at 250 MHz by a completely different component.
+
+**Common Use Cases:**
+  - **FIFO (First-In, First-Out) Buffers:** Passing data safely between two distinct processing systems running on different clock speeds.
+  - **Video Frame Buffers:** A camera interface writes incoming pixels into Port A, while a display controller pulls pixels out of Port B to draw the image on a screen.
+  - **Shared Processor Memory:** Allowing a hardware accelerator and an embedded CPU core to read and update the same data table concurrently.
 
 
