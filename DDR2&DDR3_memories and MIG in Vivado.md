@@ -36,11 +36,8 @@ DDR memory is divided into banks and these banks contains rows and columns. data
 
 ## DDR timing Parameters 
   CAS Latency (CL): Delay between read command and output data.
-
   tRCD: Row to column delay.
-
   tRP: Precharge delay.
-
   tRAS: Minimum row active time.
   
 Advantages of DDR Memory
@@ -76,4 +73,53 @@ Basic Verilog code for showing data tranfer on both edges
 ## What is DDR2 memory?
 It is the second generation of DDR memory technology and is faster and more power efficient than basic DDR (discussed before). 
 It also transferred data at falling and rising edge both but does it faster than DDR memory due to improved architecture.
+
+Main difference between basic DDR and @nd gen DDR
+| Feature           | DDR   | DDR2   |
+| ----------------- | ----- | ------ |
+| Voltage           | 2.5V  | 1.8V   |
+| Prefetch          | 2-bit | 4-bit  |
+| Speed             | Lower | Higher |
+| Power Consumption | More  | Less   |
+| Clock Frequency   | Lower | Higher |
+
+DDR 2 fetches 4 bit at a time from memory cell, this improves bandwidth and speed.
+
+## DDR2 memory organisation is similar to that of DDR with banks having rows and columns accessed by row decoder and column decoder.
+
+DDR2 Commands
+  1. ACTIVE
+    Opens a row in a bank.
+  2. READ
+    Reads data from selected column.
+  3. WRITE
+    Stores data into selected column.
+  4. PRECHARGE
+    Closes active row.
+  5. REFRESH
+    Restores capacitor charge.
+  6. NOP
+    No operation.
+
+### DDR2 Timing Parameters
+CAS Latency (CL): Delay between READ command and output data.
+tRCD: Delay between ACTIVE and READ/WRITE command.
+tRP: Time required to close one row before opening another.
+tRAS: Minimum time a row must stay active.
+
+## DDR2 Read Operation
+  1. ACTIVE row
+  2. Wait tRCD
+  3. READ command
+  4. Wait CAS latency
+  5. Data appears on DQ bus
+     
+## DDR2 Write Operation
+  1. ACTIVE row
+  2. Wait tRCD
+  3. WRITE command
+  4. Send data on DQ lines
+  5. PRECHARGE row
+
+
 
