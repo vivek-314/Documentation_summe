@@ -22,6 +22,27 @@ but in DDR it will be 200 MT/s
 ## Organisatioon of DDR Memory
 DDR memory is divided into banks and these banks contains rows and columns. data is accessed through row address and column address.
 
+## Basic DDR Operations
+  1. Activate Command
+    Opens a row in a bank.
+  2. Read Command
+    Reads data from column.
+  3. Write Command
+    Writes data into memory.
+  4. Precharge Command
+    Closes currently opened row.
+  5. Refresh Command
+    Restores charge in memory capacitors.
+
+## DDR timing Parameters 
+  CAS Latency (CL): Delay between read command and output data.
+
+  tRCD: Row to column delay.
+
+  tRP: Precharge delay.
+
+  tRAS: Minimum row active time.
+  
 Advantages of DDR Memory
   - Faster data transfer
   - High bandwidth
