@@ -164,5 +164,83 @@ Addr103 → Data3
   - Higher latency than DDR
   - Older technology now
 
+# DDR3 memory
+
+It is the third generation of DDR memory technology and is faster, more efficient, and lower power than DDR2.
+It also transfers data on rising and falling edge of clock.
+
+## Key improvement of DDR 3 comapre to DDR 2
+
+| Feature           | DDR2  | DDR3   |
+| ----------------- | ----- | ------ |
+| Voltage           | 1.8V  | 1.5V   |
+| Prefetch          | 4-bit | 8-bit  |
+| Speed             | Lower | Higher |
+| Bandwidth         | Lower | Higher |
+| Power Consumption | More  | Less   |
+
+DDR3 achieves higher speed using:
+  - Higher clock frequency
+  - 8-bit prefetch
+  - Improved signaling
+  - Better power management
+
+DDR 3 fetches 8 bits at once increasing the bandwidth.
+DDR3 Memory contains Banks which has rows and column accessed by row and column decoder.
+
+DDR3 Commands
+ACTIVE
+  Opens a row.
+READ
+  Reads data from column.
+WRITE
+  Writes data into column.
+PRECHARGE
+  Closes row.
+REFRESH
+  Restores capacitor charge.
+NOP
+  No operation.
+
+## DDR 3 Read Operation
+  1. ACTIVE row
+  2. Wait tRCD
+  3. READ command
+  4. Wait CAS latency
+  5. Burst data appears on DQ
+
+## DDR 3 Write Operation
+
+  1. ACTIVE row
+  2. WRITE command
+  3. Send burst data on DQ
+  4. PRECHARGE row
+
+### Burst tranfer in DDR3
+It uses burst length 8
+example 
+  READ Addr0
+    → D0 D1 D2 D3 D4 D5 D6 D7
+
+## Timing Parameters 
+| Parameter | Meaning             |
+| --------- | ------------------- |
+| CL        | CAS latency         |
+| tRCD      | Row-to-column delay |
+| tRP       | Precharge time      |
+| tRAS      | Row active time     |
+| tRC       | Row cycle time      |
+| tWR       | Write recovery time |
 
 
+#### DDR3 Advantages
+  - Higher speed
+  - Lower power
+  - Better bandwidth
+  - Better signal integrity
+  - Improved reliability
+
+#### Limitations
+  - More complex controller
+  - More difficult PCB routing
+  - Requires calibration
