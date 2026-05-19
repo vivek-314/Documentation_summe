@@ -8,6 +8,20 @@ For example if the clock frequency = 100 MHz
 In SDRAM effective data rate will be 100 MT/s
 but in DDR it will be 200 MT/s
 
+## DDR memory contains:
+  - Memory cells
+  - Row decoder
+  - Column decoder
+  - Sense Amplifier
+  - Banks
+  - Control Logic
+  - I/O buffers
+
+![image of ddr](ddr4-basics-banks.png)
+
+## Organisatioon of DDR Memory
+DDR memory is divided into banks and these banks contains rows and columns. data is accessed through row address and column address.
+
 Advantages of DDR Memory
   - Faster data transfer
   - High bandwidth
@@ -39,4 +53,6 @@ Basic Verilog code for showing data tranfer on both edges
 
 # DDR2 memory (Doble data rate Synchronous DRAM 2nd Gen)
 ## What is DDR2 memory?
-DDR2 (Double Data Rate 2) is a type of SDRAM memory used for high-speed data transfer. It transfers data on both rising and falling edges of the clock signal.
+It is the second generation of DDR memory technology and is faster and more power efficient than basic DDR (discussed before). 
+It also transferred data at falling and rising edge both but does it faster than DDR memory due to improved architecture.
+
