@@ -69,7 +69,7 @@ Basic Verilog code for showing data tranfer on both edges
               q <= data_fall;
           endmodule
 
-# DDR2 memory (Doble data rate Synchronous DRAM 2nd Gen)
+# DDR2 memory (Double data rate Synchronous DRAM 2nd Gen)
 ## What is DDR2 memory?
 It is the second generation of DDR memory technology and is faster and more power efficient than basic DDR (discussed before). 
 It also transferred data at falling and rising edge both but does it faster than DDR memory due to improved architecture.
@@ -120,6 +120,49 @@ tRAS: Minimum time a row must stay active.
   3. WRITE command
   4. Send data on DQ lines
   5. PRECHARGE row
+
+## Burst transfer in DDR2
+DDR2 usually transfers data in bursts. Which improves speed and bandwidth.
+
+### What is burst ?
+A burst means transferring multiple data values continuously after giving only one READ or WRITE command.
+Instead of sending address again and again,
+DDR memory automatically transfers consecutive data.
+This makes memory transfer much faster.
+
+We can see a example:
+Without burstn :
+READ Addr0 → Data0
+READ Addr1 → Data1
+READ Addr2 → Data2
+READ Addr3 → Data3
+multiple commands needed.
+
+With burst:
+READ Addr0
+→ Data0 Data1 Data2 Data3
+only 1 read command is given to get multiple data values.
+
+IF,
+Burst Length = 4 and
+Start Address = 100
+then ddr automatically transfers:
+Addr100 → Data0
+Addr101 → Data1
+Addr102 → Data2
+Addr103 → Data3
+
+## Advantages of DDR2
+  - Higher speed
+  - Lower power usage
+  - Better bandwidth
+  - Improved signal integrity
+  - Faster burst transfers
+
+## Limitations of DDR2
+  - More complex controller
+  - Higher latency than DDR
+  - Older technology now
 
 
 
