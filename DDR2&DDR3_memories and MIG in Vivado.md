@@ -274,13 +274,13 @@ Example with 100 MHz clock.
 
 Tranfer percycle is 2 (rising + falling)
 
-### DDR 
+### 1) DDR 
 2 bit prefetch
 internal memeory and external; bus speed is same.
 input clock : 100 Mhz
 Data transfer : 2 x 100 = 200 MT/s
 
-### DDR 2 
+### 2) DDR 2 
 4 bit prefetch
 intrtnal memory core runs slower then external bus transfer as it fetches 4 bit at once
 
@@ -290,7 +290,7 @@ intrtnal memory core runs slower then external bus transfer as it fetches 4 bit 
 Data transfer : 2 x (effective transfer rate of DDR)
                 2 x 2 x 100 = 400 MT/s
 
-### DDR 3 
+### 3) DDR 3 
 8 but prefetch
 internal core becomes slower and external core becomes faster.
 
@@ -337,7 +337,7 @@ New DDR generations
 
 Let's see another example for full clarity of how internal clock external clocka and data transfer rates are related.
 
-## 1) DDR 
+### 1) DDR 
 2 bit fetch 
 internal clock : 100 MHz
 external clock is almost same : 100 MHz
@@ -349,7 +349,7 @@ Bandwidth
 = 1600 MB/s
 = 1.6 GB/s
 
-## 2) DDR 2
+### 2) DDR 2
 4 bit fetch 
 internal clock : 100 MHz
 external clock  run 2 times faster than internal : 2 x 100 MHz = 200 MHz
@@ -361,7 +361,7 @@ Bandwidth
 = 3200 MB/s
 = 3.2 GB/s
 
-## 3) DDR 3
+### 3) DDR 3
 8 bit fetch 
 internal clock : 100 MHz
 external clock : 400 MHz
