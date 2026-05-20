@@ -305,7 +305,7 @@ Data transfer : 2 x (effective transfer rate of DDR)
 
 At same external clock bandwidth remains same as they uses double edge transfer and physically they transfer data at only fall and raise clock edge. But due to prefetch we see different data transfer rates in MT/s
 
-Bandwidth = $\frac{MT/s x bus width }{8}$
+Bandwidth = $\frac{MT/s x bus width}{8}$
 
 | Type | MT/s     | Bandwidth |
 | ---- | -------- | --------- |
