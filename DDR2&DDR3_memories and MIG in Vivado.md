@@ -244,3 +244,137 @@ example
   - More complex controller
   - More difficult PCB routing
   - Requires calibration
+
+
+# DDR vs DDR2 vs DDR3 comparison
+
+| Feature              | DDR              | DDR2               | DDR3               |
+| -------------------- | ---------------- | ------------------ | ------------------ |
+| Full Form            | Double Data Rate | Double Data Rate 2 | Double Data Rate 3 |
+| Voltage              | 2.5V             | 1.8V               | 1.5V               |
+| Prefetch Buffer      | 2-bit            | 4-bit              | 8-bit              |
+| Data Transfer        | Both clock edges | Both clock edges   | Both clock edges   |
+| Internal Core Speed  | Same as bus      | Half of bus speed  | 1/4 of bus speed   |
+| Typical Burst Length | 2 / 4            | 4                  | 8                  |
+| Banks                | 4                | 4                  | 8                  |
+| Power Consumption    | High             | Medium             | Low                |
+| Signal Quality       | Basic            | Improved           | Better             |
+| Max Standard MT/s    | 400 MT/s         | 1066 MT/s          | 2133 MT/s          |
+
+### What is MT/s?
+As DDR transfers data on both falling and rising edge the effective transfer rate becomes double
+
+example,
+| Clock Frequency | DDR Transfer Rate |
+| --------------- | ----------------- |
+| 100 MHz         | 200 MT/s          |
+| 200 MHz         | 400 MT/s          |
+
+Example with 100 MHz clock.
+
+Tranfer percycle is 2 (rising + falling)
+
+### DDR 
+2 bit prefetch
+internal memeory and external; bus speed is same.
+input clock : 100 Mhz
+Data transfer : 2 x 100 = 200 MT/s
+
+### DDR 2 
+4 bit prefetch
+intrtnal memory core runs slower then external bus transfer as it fetches 4 bit at once
+
+| Internal Core | 50 MHz    |
+| External Bus  | 100 MHz   |
+
+Data transfer : 2 x (effective transfer rate of DDR)
+                2 x 2 x 100 = 400 MT/s
+
+### DDR 3 
+8 but prefetch
+internal core becomes slower and external core becomes faster.
+
+| Internal Core | 25 MHz    |
+| External Bus  | 100 MHz   |
+
+Data transfer : 2 x (effective transfer rate of DDR)
+                2 x 4 x 100 = 800 MT/s
+
+At same external clock bandwidth remains same as they uses double edge transfer and physically they transfer data at only fall and raise clock edge. But due to prefetch we see different data transfer rates in MT/s
+
+Bandwidth = $\frac{MT/s x bus width }{8}
+
+| Type | MT/s     | Bandwidth |
+| ---- | -------- | --------- |
+| DDR  | 200 MT/s | 1.6 GB/s  |
+| DDR2 | 200 MT/s | 1.6 GB/s  |
+| DDR3 | 200 MT/s | 1.6 GB/s  |
+
+In newer DDR generations, the external bus clock becomes much faster while the internal memory core clock increases much less (or remains relatively slower). To supply data fast enough to the high-speed external bus, the memory fetches larger chunks of data internally using larger prefetch buffers (2-bit, 4-bit, 8-bit, etc.).
+This allows a slower internal memory core to support a much faster external interface and higher bandwidth.
+ 
+| Type | Typical External Clock | Effective MT/s | Bandwidth |
+| ---- | ---------------------- | -------------- | --------- |
+| DDR  | 200 MHz                | 400 MT/s       | 3.2 GB/s  |
+| DDR2 | 400 MHz                | 800 MT/s       | 6.4 GB/s  |
+| DDR3 | 800 MHz                | 1600 MT/s      | 12.8 GB/s |
+
+New DDR generations
+  → support much higher external clocks
+  → which increases MT/s
+  → which increases bandwidth
+
+| Feature              | DDR      | DDR2     | DDR3     |
+| -------------------- | -------- | -------- | -------- |
+| Prefetch             | 2-bit    | 4-bit    | 8-bit    |
+| Internal Core Clock  | 100 MHz  | 100 MHz  | 100 MHz  |
+| External Bus Clock   | 100 MHz  | 200 MHz  | 400 MHz  |
+| Double Edge Transfer | Yes      | Yes      | Yes      |
+| Effective MT/s       | 200      | 400      | 800      |
+| Bus Width            | 64-bit   | 64-bit   | 64-bit   |
+| Bandwidth            | 1.6 GB/s | 3.2 GB/s | 6.4 GB/s |
+
+
+Let's see another example for full clarity of how internal clock external clocka and data transfer rates are related.
+
+## 1) DDR 
+2 bit fetch 
+internal clock : 100 MHz
+external clock is almost same : 100 MHz
+DDR transfer rate (both edges): 2 x 100 
+                              = 200 MT/s
+                              
+Bandwidth
+= 200 × 64 / 8
+= 1600 MB/s
+= 1.6 GB/s
+
+## 2) DDR 2
+4 bit fetch 
+internal clock : 100 MHz
+external clock  run 2 times faster than internal : 2 x 100 MHz = 200 MHz
+DDR transfer rate (both edges): 2 x 200 
+                              = 400 MT/s
+
+Bandwidth
+400 × 64 / 8
+= 3200 MB/s
+= 3.2 GB/s
+
+## 3) DDR 3
+8 bit fetch 
+internal clock : 100 MHz
+external clock : 400 MHz
+DDR transfer rate (both edges): 2 x 400 
+                              = 800 MT/s
+
+Bandwidth
+800 × 64 / 8
+= 6400 MB/s
+= 6.4 GB/s
+
+
+
+
+
+
