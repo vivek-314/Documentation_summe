@@ -276,26 +276,29 @@ Tranfer percycle is 2 (rising + falling)
 
 ### 1) DDR 
 2 bit prefetch
+
 internal memeory and external; bus speed is same.
 input clock : 100 Mhz
 Data transfer : 2 x 100 = 200 MT/s
 
 ### 2) DDR 2 
 4 bit prefetch
+
 intrtnal memory core runs slower then external bus transfer as it fetches 4 bit at once
 
-| Internal Core | 50 MHz    |
-| External Bus  | 100 MHz   |
+Internal Core: 50 MHz   
+External Bus : 100 MHz  
 
 Data transfer : 2 x (effective transfer rate of DDR)
                 2 x 2 x 100 = 400 MT/s
 
 ### 3) DDR 3 
 8 but prefetch
+
 internal core becomes slower and external core becomes faster.
 
-| Internal Core | 25 MHz    |
-| External Bus  | 100 MHz   |
+Internal Core : 25 MHz    
+External Bus  : 100 MHz   
 
 Data transfer : 2 x (effective transfer rate of DDR)
                 2 x 4 x 100 = 800 MT/s
