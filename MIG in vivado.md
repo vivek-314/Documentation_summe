@@ -96,7 +96,7 @@ MIG solves this problem by generating the complete memory controller automatical
   - Applications of MIG
 
 
-
+# MIG in VIVADO 
 
 
 
