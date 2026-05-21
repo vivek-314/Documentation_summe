@@ -98,6 +98,14 @@ MIG solves this problem by generating the complete memory controller automatical
 
 # MIG in VIVADO 
 
+While we use external DDR memory we need MIG to use as interfave between them.
+          FPGA Logic  ↔  MIG  ↔  DDR3/DDR4 Chip
+
+MIG setup in Vivado
+
+### 1) Create new Vivado project 
+Select the name, FPGA board 
+
 
 
 
