@@ -99,6 +99,7 @@ MIG solves this problem by generating the complete memory controller automatical
 # MIG in VIVADO 
 
 While we use external DDR memory we need MIG to use as interfave between them.
+
           FPGA Logic  ↔  MIG  ↔  DDR3/DDR4 Chip
 
 MIG setup in Vivado
@@ -106,7 +107,7 @@ MIG setup in Vivado
 ### 1) Create new Vivado project 
   - Select the name, FPGA board.
 ### 2) Open IP catalog 
-  -Tools &rarr IP Catalog (search Memory Interface Generator) &rarr Double click MIG PI
+  - Tools → IP Catalog (search Memory Interface Generator) → Double click MIG PI
 ### 3) Start MIG Configuration Wizard
   - MIG wizard opens.
   - Select Memory Type (eg. DDR3)
@@ -121,13 +122,13 @@ MIG setup in Vivado
       - clocks
       - reset pins
   - Vivado may autofill constraints else manually assign pins.
-    eg. ddr3_dq
-        ddr3_addr
-        ddr3_ba
-        ddr3_clk
+    eg. ddr3_dq,
+        ddr3_addr,
+        ddr3_ba,
+        ddr3_clk,
         ddr3_dqs
 ### 6) Choose input clock 
-  - eg. 100 MHz system clock
+eg. 100 MHz system clock
   - MIG internally generates:
       - memory clock
       - reference clocks
@@ -245,14 +246,17 @@ it will connect the interface
 Clock : 
   - sys_clk_i
   - clk_ref_i
+    
 Reset :
   - sys_rst
+    
 DDR physical signals
   - ddr3_dq
   - ddr3_dqs_p
   - ddr3_dqs_n
   - ddr3_addr
   - ddr3_ba
+    
 User interface signals
   - Write signals
     - app_addr
