@@ -58,12 +58,48 @@ module fp32(
 endmodule
 
 32 bit IEEE 754 floating point multiplier.
-module fp32(
-    input [31:0] a,
-    input [31:0] b,
-    output reg [31:0] product
-);
+This module extracts sign, exponent and mantissa fields and handles IEEE special cases. And give output in normalized form.
 
-here input a and b are two floating point number and product is the multiplication result.
 
-Here (* keep_hierarchy = "yes" *) is used 
+a[31:0]                             b[31:0]
+                │                                   │
+                ▼                                   ▼
+      ┌──────────────────┐                ┌──────────────────┐
+      │  Field Extract   │                │  Field Extract   │
+      │ (Sign, Exp, Mant)│                │ (Sign, Exp, Mant)│
+      └─────────┬────────┘                └─────────┬────────┘
+                │                                   │
+                └─────────────────┬─────────────────┘
+                                  │ (Sign, Exp, Mant bits)
+                                  ▼
+      ┌──────────────────────────────────────────────────────┐
+      │               Special Case Detection                 │
+      │        (Check for NaNs, Infs, Zeros, Denorms)        │
+      └──────────────────────────┬───────────────────────────┘
+                                  │
+         ┌────────────────────────┴────────────────────────┐
+         │                                                 │
+         ▼ (Exponents & Signs)                             ▼ (Mantisand / Fractions)
+┌─────────────────────────────────┐               ┌─────────────────────────────────┐
+│     Exponent Add & Bias Adjust  │               │           24x24 DSP             │
+│    Exp_out = Ea + Eb - 127      │               │      Mantissa Multiplier        │
+│    Sign_out = Sa ^ Sb           │               │   (Includes hidden 1-bit)       │
+└────────────────┬────────────────┘               └────────────────┬────────────────┘
+                 │                                                 │
+                 │              ┌──────────────────────────────────┘
+                 │              │ (48-bit product)
+                 ▼              ▼
+      ┌──────────────────────────────────────────────────────┐
+      │                    Normalization                     │
+      │       (1-bit Right Shift if MSB=1 + Exp Adjust)      │
+      │                & Rounding Control                    │
+      └──────────────────────────┬───────────────────────────┘
+                                  │
+                                  ▼
+      ┌──────────────────────────────────────────────────────┐
+      │                     Result Pack                      │
+      │             (IEEE-754 Format Assembly)               │
+      └──────────────────────────┬───────────────────────────┘
+                                  │
+                                  ▼
+                            product[31:0]
