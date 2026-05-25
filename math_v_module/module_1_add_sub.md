@@ -223,4 +223,11 @@ Test cases used:
 
 ![simulation results](mod1_sim.png)
 
+# Optimising the code 
+
+    - We have used a long chain of if-else instead we can use a leading user detector or tree based priority encoder.
+    - Add piplining divite the combinational design into stages by adding registe rin between 
+
+    - Handle special IEEE 754 cases - NaN and Infinity. 
+    eg. if exponenet is 255 it will be marked infinity or NaN. 
 
