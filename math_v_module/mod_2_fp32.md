@@ -1,0 +1,69 @@
+(* keep_hierarchy = "yes" *)
+module fp32(
+    input [31:0] a,
+    input [31:0] b,
+    output reg [31:0] product
+);
+    wire sign1, sign2, sign;
+    wire [7:0] es1, es2;
+    wire [22:0] mantissa1, mantissa2;
+    
+    // Force Vivado to use DSP slices for this 24x24 multiplication
+    (* use_dsp = "yes" *) reg [47:0] mantissa_product;
+    
+    reg [7:0] exponent_result;
+    wire a_zero, b_zero, a_inf, b_inf, a_nan, b_nan;
+
+    assign sign1 = a[31];
+    assign es1 = a[30:23];
+    assign mantissa1 = a[22:0];
+    assign sign2 = b[31];
+    assign es2 = b[30:23];
+    assign mantissa2 = b[22:0];
+    assign sign = sign1 ^ sign2;
+
+    assign a_zero = (es1 == 8'd0) && (mantissa1 == 23'd0);
+    assign b_zero = (es2 == 8'd0) && (mantissa2 == 23'd0);
+    assign a_inf = (es1 == 8'b11111111) && (mantissa1 == 0);
+    assign b_inf = (es2 == 8'b11111111) && (mantissa2 == 0);
+    assign a_nan = (es1 == 8'b11111111) && (mantissa1 != 0);
+    assign b_nan = (es2 == 8'b11111111) && (mantissa2 != 0);
+
+    wire [8:0] e_sum_prior = es1 + es2;
+    wire [7:0] e_sum = (e_sum_prior < 127) ? 8'b0 : e_sum_prior - 9'd127;
+
+    always @(*) begin
+        product = 32'd0;
+        if (a_nan || b_nan) begin
+            product = {1'b0, 8'b11111111, 23'h400000};
+        end else if ((a_inf && b_zero) || (b_inf && a_zero)) begin
+            product = {1'b0, 8'b11111111, 23'h400000};
+        end else if (a_inf || b_inf) begin
+            product = {sign, 8'b11111111, 23'd0};
+        end else if (a_zero || b_zero) begin
+            product = {sign, 8'd0, 23'd0};
+        end else begin
+            // This operation will now consume DSPs instead of 500+ LUTs
+            mantissa_product = {1'b1, mantissa1} * {1'b1, mantissa2};
+            
+            if (mantissa_product[47]) begin
+                exponent_result = e_sum + 1;
+                product = {sign, exponent_result, mantissa_product[46:24]};
+            end else begin
+                exponent_result = e_sum;
+                product = {sign, exponent_result, mantissa_product[45:23]};
+            end
+        end
+    end
+endmodule
+
+32 bit IEEE 754 floating point multiplier.
+module fp32(
+    input [31:0] a,
+    input [31:0] b,
+    output reg [31:0] product
+);
+
+here input a and b are two floating point number and product is the multiplication result.
+
+Here (* keep_hierarchy = "yes" *) is used 
