@@ -61,45 +61,85 @@ endmodule
 This module extracts sign, exponent and mantissa fields and handles IEEE special cases. And give output in normalized form.
 
 
-a[31:0]                             b[31:0]
-                │                                   │
-                ▼                                   ▼
-      ┌──────────────────┐                ┌──────────────────┐
-      │  Field Extract   │                │  Field Extract   │
-      │ (Sign, Exp, Mant)│                │ (Sign, Exp, Mant)│
-      └─────────┬────────┘                └─────────┬────────┘
-                │                                   │
-                └─────────────────┬─────────────────┘
-                                  │ (Sign, Exp, Mant bits)
-                                  ▼
-      ┌──────────────────────────────────────────────────────┐
-      │               Special Case Detection                 │
-      │        (Check for NaNs, Infs, Zeros, Denorms)        │
-      └──────────────────────────┬───────────────────────────┘
-                                  │
-         ┌────────────────────────┴────────────────────────┐
-         │                                                 │
-         ▼ (Exponents & Signs)                             ▼ (Mantisand / Fractions)
-┌─────────────────────────────────┐               ┌─────────────────────────────────┐
-│     Exponent Add & Bias Adjust  │               │           24x24 DSP             │
-│    Exp_out = Ea + Eb - 127      │               │      Mantissa Multiplier        │
-│    Sign_out = Sa ^ Sb           │               │   (Includes hidden 1-bit)       │
-└────────────────┬────────────────┘               └────────────────┬────────────────┘
-                 │                                                 │
-                 │              ┌──────────────────────────────────┘
-                 │              │ (48-bit product)
-                 ▼              ▼
+             a[31:0]                             b[31:0]
+                 │                                   │
+                 ▼                                   ▼
+         ┌──────────────────┐                ┌──────────────────┐
+         │  Field Extract   │                │  Field Extract   │
+         │ (Sign, Exp, Mant)│                │ (Sign, Exp, Mant)│
+         └─────────┬────────┘                └─────────┬────────┘
+                   │                                   │
+                   └─────────────────┬─────────────────┘
+                                     │ (Sign, Exp, Mant bits)
+                                     ▼
+           ┌──────────────────────────────────────────────────────┐
+           │               Special Case Detection                 │
+           │        (Check for NaNs, Infs, Zeros, Denorms)        │
+           └──────────────────────────┬───────────────────────────┘
+                                      │
+         ┌────────────────────────────┴────────────────────────┐
+         │                                                     │
+         ▼ (Exponents & Signs)                                 ▼ (Mantisand / Fractions)
+    ┌─────────────────────────────────┐               ┌─────────────────────────────────┐
+    │     Exponent Add & Bias Adjust  │               │           24x24 DSP             │
+    │    Exp_out = Ea + Eb - 127      │               │      Mantissa Multiplier        │
+    │    Sign_out = Sa ^ Sb           │               │   (Includes hidden 1-bit)       │
+    └────────────────┬────────────────┘               └────────────────┬────────────────┘
+                     │                                                 │
+                     │              ┌──────────────────────────────────┘
+                     │              │ (48-bit product)
+                     ▼              ▼
       ┌──────────────────────────────────────────────────────┐
       │                    Normalization                     │
       │       (1-bit Right Shift if MSB=1 + Exp Adjust)      │
       │                & Rounding Control                    │
       └──────────────────────────┬───────────────────────────┘
-                                  │
-                                  ▼
+                                 │
+                                 ▼
       ┌──────────────────────────────────────────────────────┐
       │                     Result Pack                      │
       │             (IEEE-754 Format Assembly)               │
       └──────────────────────────┬───────────────────────────┘
-                                  │
-                                  ▼
+                                 │
+                                 ▼
+                      ┌────────────────────────┐
+                      │      product[31:0]     │          
+                      └────────────────────────┘
+
+
+## Using module 
+
+Module is declared with input output and product.
+a and b input with 32 bit width IEEE-754 floating point.
+& output is product of a and b of 32 bit width.
+
+Output is in IEEE 754 formate. 
+Hvaing sign exponent and mantissa.
+
+## Working principle.
+
+    1) Extract fields:
+        - sign bits 
+        - exponents 
+        - mantissa 
+
+    2) Detect special cases
+        - zero
+        - infinity
+        - NaN 
+        - 0 x Infinity 
+    3) computes sign using xor function using the extracted sign component.
+    4) Add exponents 
+        IEEE multiplicatoion rule: E1 + E2 - Bias(127)
+    5) Multiply mantissas
+       - (1.m1) × (1.m2)
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 ▼
                             product[31:0]
+
