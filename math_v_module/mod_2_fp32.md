@@ -159,7 +159,7 @@ Hvaing sign exponent and mantissa.
  - exponent overflow should generate infinity not currently implemented.
 
 
-# Testbench and explanation
+# Testbench with different cases
 
 Testbench
 
@@ -215,19 +215,20 @@ Testbench
     endmodule
 
 expected results 
-------------------------------------------
+
 | case      | A     | B     | Result      |
--------------------------------------------
+| ----------|-------|-------|-------------|
 | Normal    | 1.5   |2.5    | 3.75        |
-|     Zero  | 0     |5.5    | 0           |
+| Zero      | 0     |5.5    | 0           |
 | Infinity  | inf   |2      |inf          |
-| Invalid   |inf    |0      | NaN         |
-| NaN       | NaN   |2      |NaN          |
+| Invalid   | inf   |0      | NaN         |
+| NaN       | NaN   |2      |  NaN        |
 | Negative  | -2    | 3     | -6          |  
--------------------------------------------
 
 ![simulation](mod2_sim.png)
-                                 
-                                 
-                      
-
+                                          
+## Optimizations option
+- Split into stages
+- Include IEEE rounding
+- Underflow and overflow detection
+- We can use Wallace tree multiplier to lower delay
