@@ -214,7 +214,7 @@ Testbench
 
     endmodule
 
-expected results 
+Testbench used
 
 | case      | A     | B     | Result      |
 | ----------|-------|-------|-------------|
@@ -227,7 +227,7 @@ expected results
 
 ![simulation](mod2_sim.png)
                                           
-## Optimizations option
+## Optimizating code
 - Split into stages
 - Include IEEE rounding
 - Underflow and overflow detection
