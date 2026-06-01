@@ -148,6 +148,18 @@ This is repeated for each resulting element from [0][0] to [2][2].
 Thus, we have our matrix multiplication of 3x3 matrices.
 
 
+## Advantages 
+
+At each Clock Edge, What Happens Inside the Hardware?
+
+- **Start (Cycle 0)** 
+    - You apply Matrix A and Matrix B to the input pins. All 27 multipliers instantly start working on the data combinationally.
+- **Clock Edge 1** 
+    - "Stage 1 Ends: The 27 products are captured into the first layer of registers (mul0_reg, mul1_reg, mul2_reg). The first adders instantly start working."
+- **Clock Edge 2** 
+    - Stage 2 Ends: The first addition results are captured into sum01_reg. The final adders instantly start working.
+- **Clock Edge 3** 
+    - Stage 3 Ends: The final addition completes. The 9 final answers are captured into sum_final[i][j] and instantly appear at the Result output pin.
 
 
 
