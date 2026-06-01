@@ -133,4 +133,21 @@ Here loop is used to assign each position and maps it to the assigned bits.
 | **Row 2, Col 1** | `[63:32]` |
 | **Row 2, Col 2** | `[31:0]` |
 
+Here after unpacking the matrix a loop is used to perform matrix multiplication of two matrices by using the multiplication f32 module and add_sub module used before. 
+
+A pipeline structure is used bu having the multiplication of 3 elements of mat[A] and mat[B] and subsequently are added to form a whole element of resulting matrix.
+
+Here after multiplying we have mult0, mult1 and mult2
+which is stored in mult0_reg, mult1_reg and mult2_reg.
+Initial addition is done between mult0_reg and mult1_reg and result is sum01_wire which is stored in sum01_reg meanwhile the sum2_reg is stored in mul2_delay_reg to avoid time lag and the second addition to be performed with some new value. This delay is necessery to allign all values.
+
+the sum01_reg and mul2_delay_reg is added again using add_sub module to obtail final resulting element of resulting matrix.
+sum_final_wire will store the result in sum_final_[i][j] 
+
+This is repeated for each resulting element from [0][0] to [2][2].
+Thus, we have our matrix multiplication of 3x3 matrices.
+
+
+
+
 
