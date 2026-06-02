@@ -66,3 +66,4 @@
             result <= { sum_final_wire[0], sum_final_wire[1], sum_final_wire[2], sum_final_wire[3] };
         end
     endmodule
+
