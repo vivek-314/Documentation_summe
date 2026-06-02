@@ -147,8 +147,7 @@ sum_final_wire will store the result in sum_final_[i][j]
 This is repeated for each resulting element from [0][0] to [2][2].
 Thus, we have our matrix multiplication of 3x3 matrices.
 
-
-## Advantages 
+**How it works with clock:- **
 
 At each Clock Edge, What Happens Inside the Hardware?
 
@@ -161,5 +160,105 @@ At each Clock Edge, What Happens Inside the Hardware?
 - **Clock Edge 3** 
     - Stage 3 Ends: The final addition completes. The 9 final answers are captured into sum_final[i][j] and instantly appear at the Result output pin.
 
+## Advantages
+
+**1. Parallel Computation**
+
+- The design computes all 9 matrix elements simultaneously.
+- Each element has its own:
+    - multipliers
+    - adders
+    - pipeline registers
+So operations happen in parallel. Very high throughput and fast computation.
+
+**2. Pipelined Architecture**
+
+The design uses pipeline stages:
+
+- Stage	Operation
+    1.	Multiplication
+    2.	First addition
+    3.	Final addition
+
+- using registers:
+    - mul0_reg
+    - sum01_reg
+    - mul2_delay_reg
+
+Breaks long combinational paths. Better FPGA performance
+
+**3. Modular Design**
+Uses separate reusable modules:
+- fp32
+- add_sub
+- Advantage
+Easy to debug and use it independently.
+
+**4. Generate Loop Based**
+
+it Uses:
+generate
+for(...)
+Advantage
+
+Code becomes scalable and compact. Instead of manually writing 9 matrix computations.
+
+**5. Proper Timing Alignment**
+
+This line:
+
+        mul2_delay_reg <= mul2_reg;
+
+synchronizes pipeline stages and prevents incorrect data mixing between stages.
+
+## Limitations 
+
+**1. Very High Hardware Usage**
+Total: 
+FP Multipliers	27
+FP Adders	18
+are used which consumes large FPGA resources:
+
+- DSP slices
+- LUTs
+- flip-flops
+
+**2. High Power Consumption**
+
+Since all units operate simultaneously power usage becomes high.
+Not ideal for low-power systems.
+
+**3. Increased Latency**
+Pipeline introduces delay. Output does NOT appear immediately.
+
+Example:
+Result may appear after **3 clock cycles**
 
 
+**4. No Overflow/Exception Handling**
+
+Current code uses fp32 and add_sub modules which does not explicitly handle:
+
+NaN
+Infinity
+overflow
+underflow
+denormal numbers
+Limitation
+
+May produce incorrect IEEE-754 edge-case behavior.
+
+**5. Scaling Problem**
+
+For NxN matrix:
+Hardware grows rapidly.
+
+Example
+
+For 8×8:
+
+Operation	Count
+Multipliers	512
+Adders	Huge
+
+Design becomes impractical for large matrices.
