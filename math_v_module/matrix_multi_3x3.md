@@ -214,9 +214,11 @@ synchronizes pipeline stages and prevents incorrect data mixing between stages.
 ## Limitations 
 
 **1. Very High Hardware Usage**
+
 Total: 
-FP Multipliers	27
-FP Adders	18
+- FP Multipliers	27
+- FP Adders	18
+  
 are used which consumes large FPGA resources:
 
 - DSP slices
@@ -225,40 +227,39 @@ are used which consumes large FPGA resources:
 
 **2. High Power Consumption**
 
-Since all units operate simultaneously power usage becomes high.
-Not ideal for low-power systems.
+- Since all units operate simultaneously power usage becomes high.
+- Not ideal for low-power systems.
 
 **3. Increased Latency**
-Pipeline introduces delay. Output does NOT appear immediately.
+
+- Pipeline introduces delay. Output does NOT appear immediately.
 
 Example:
-Result may appear after **3 clock cycles**
+    - Result may appear after **3 clock cycles**
 
 
 **4. No Overflow/Exception Handling**
 
 Current code uses fp32 and add_sub modules which does not explicitly handle:
 
-NaN
-Infinity
-overflow
-underflow
-denormal numbers
-Limitation
+    - NaN
+    -Infinity
+    - overflow
+    - underflow
+    - denormal numbers
+    - Limitation
 
 May produce incorrect IEEE-754 edge-case behavior.
 
 **5. Scaling Problem**
 
-For NxN matrix:
-Hardware grows rapidly.
+- For NxN matrix hardware grows rapidly.
 
 Example
 
-For 8×8:
+For 8×8 Operation Count
 
-Operation	Count
-Multipliers	512
-Adders	Huge
-
+    - Multipliers	512
+    - Adders	Huge
+    
 Design becomes impractical for large matrices.
