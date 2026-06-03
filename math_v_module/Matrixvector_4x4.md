@@ -180,3 +180,15 @@ Same process is for the 4x1 martix with only 4 element so it divides easily.
 | pt[2]       | pt[63:32]  |
 | pt[3]       | pt[31:0]   |
 
+After we have both the matrices we use the multiplication f32 module to have row to column multiplication. of each element hence we will have 4 products mult0, mult1, mult2, mult3.
+
+which will be saved in sum0_0, sum1_reg, sum2_reg, and sum3_reg to store value and have pipelined structure. 
+
+It is followed by addition of all elements. Since addition of 4 element is difficult we can perform addition 3 times. [(mult0_reg + mult1_reg) + (mult2_reg + mult3_reg)]
+
+mult0_reg + mult1_reg = sum01 which will be saved in sum01_reg & 
+mult2_reg + mult3_reg = sum23 which will be saved in sum01_reg 
+
+Final addition will be done. sum01_reg + sum23_reg to have out sum_final_wire 
+It will be transferred to result, thus we will obtain out 4x4 * 4x1 matirix multiplication.
+
