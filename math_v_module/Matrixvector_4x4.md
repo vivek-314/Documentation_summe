@@ -77,7 +77,7 @@ The matrix-vector multiplication is:
         [c1 c2 c3 c4]       [z]      [zr]
         [d1 d2 d3 d4]       [w]      [wr]
 
-example of one output elemment: xr = a1x * a2y * a3z * a4w
+example of one output elemment: xr = a1*x + a2*y + a3*z + a4w
 similarly, yr zr wr are obtained
 
                  ┌───────────────────────────┐      ┌───────────────────────────┐             
@@ -137,4 +137,46 @@ similarly, yr zr wr are obtained
                         ├── + ── final result
               sum23 ───┘
 
+
+The input is taken as a flatten matrix which is then unpacked then made aa 2-d matrix of 4x4 and 4x1.
+for 4x4 the input is 512 bits, 1 integer will take 4 byte = 32 bits and 32 x 4 x4 = 512. similarly then 4x1 will have 4x1x32 = 128 bits.
+
+Once the input is taken then it is unpacked in 32 bit pack as a element using loop.
+
+        assign T1[ii][0] = T[(15 - (ii*4 + 0))*32 +: 32];
+        assign T1[ii][1] = T[(15 - (ii*4 + 1))*32 +: 32]; 
+        assign T1[ii][2] = T[(15 - (ii*4 + 2))*32 +: 32]; 
+        assign T1[ii][3] = T[(15 - (ii*4 + 3))*32 +: 32];
+        
+here ii is the variable therefore the it will cover from [0][0] to [4][4]. 
+for [0][0] the bit selected are 511 to 480 similarly for [3][3] it is 31 to 0.
+
+|511................480|479................448| ... |31.............0|
+|        T00           |         T01          | ... |      T33       |
+
+
+| Matrix Element | Linear Index | Bit Range  |
+| -------------- | ------------ | ---------- |
+| T1[0][0]       | 0            | T[511:480] |
+| T1[0][1]       | 1            | T[479:448] |
+| T1[0][2]       | 2            | T[447:416] |
+| T1[0][3]       | 3            | T[415:384] |
+| T1[1][0]       | 4            | T[383:352] |
+| T1[1][1]       | 5            | T[351:320] |
+| T1[1][2]       | 6            | T[319:288] |
+| T1[1][3]       | 7            | T[287:256] |
+| T1[2][0]       | 8            | T[255:224] |
+| T1[2][1]       | 9            | T[223:192] |
+| T1[2][2]       | 10           | T[191:160] |
+| T1[2][3]       | 11           | T[159:128] |
+| T1[3][0]       | 12           | T[127:96]  |
+| T1[3][1]       | 13           | T[95:64]   |
+| T1[3][2]       | 14           | T[63:32]   |
+| T1[3][3]       | 15           | T[31:0]    |
+
+Same process is for the 4x1 martix with only 4 element so it divides easily.
+| pt[0]       | pt[127:96] |
+| pt[1]       | pt[95:64]  |
+| pt[2]       | pt[63:32]  |
+| pt[3]       | pt[31:0]   |
 
