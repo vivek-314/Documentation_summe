@@ -192,3 +192,24 @@ mult2_reg + mult3_reg = sum23 which will be saved in sum01_reg
 Final addition will be done. sum01_reg + sum23_reg to have out sum_final_wire 
 It will be transferred to result, thus we will obtain out 4x4 * 4x1 matirix multiplication.
 
+Here we have not used (((mult0+mult1)+mult2)+mult3) other wise we need to shift or delay mult2 one time and mult3 two times to allign all values for operation and avoid any value is replaced by any new value.
+
+## Advantages 
+
+**1. High speed parallel processing**
+- all 4 rows are computed simultaneously.
+
+**2. Piplined Architecture**
+- Faster processing and no delay.
+
+**3. Floating point supported**
+- using module f32 and add_sub and using them in loop speeds up process.
+
+## Limitation
+
+**1. FPGA resources ussed in lareg quntity.
+- 16 multipliers and 12 adders are used.
+
+**2. high power consumption**
+- many parallel blocks active simultaneouly.
+
