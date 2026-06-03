@@ -67,30 +67,30 @@
         end
     endmodule
 
+In this  module we are multiplying a 4x4 matrix with a 4x1 matrix.
+It is similar to matrix multiplication of 3x3 module.
 
+The matrix-vector multiplication is:
 
-                 ┌───────────────────────────┐
-                 │   Packed Matrix T[511:0]  │
-                 └─────────────┬─────────────┘
-                               │
-                        UNPACK MATRIX
-                               │
-                 ┌─────────────▼─────────────┐
-                 │      T1[4][4] Matrix      │
-                 └───────────────────────────┘
+        [a1 a2 a3 a4]       [x]      [xr]
+        [b1 b2 b3 b4]   X   [y]   =  [yr]
+        [c1 c2 c3 c4]       [z]      [zr]
+        [d1 d2 d3 d4]       [w]      [wr]
 
+example of one output elemment: xr = a1x * a2y * a3z * a4w
+similarly, yr zr wr are obtained
 
-                 ┌───────────────────────────┐
-                 │   Packed Vector pt[127:0] │
-                 └─────────────┬─────────────┘
-                               │
-                        UNPACK VECTOR
-                               │
-                 ┌─────────────▼─────────────┐
-                 │        pt1[4] Vector      │
-                 └───────────────────────────┘
+                 ┌───────────────────────────┐      ┌───────────────────────────┐             
+                 │   Packed Matrix T[511:0]  │      │   Packed Vector pt[127:0] │               
+                 └─────────────┬─────────────┘      └─────────────┬─────────────┘
+                               │                                  |
+                        UNPACK MATRIX                        UNPACK VECTOR
+                               │                                  |
+                 ┌─────────────▼─────────────┐      ┌─────────────▼─────────────┐
+                 │      T1[4][4] Matrix      │      │        pt1[4] Vector      │
+                 └───────────────────────────┘      └───────────────────────────┘
 
-
+         
         ┌────────────────────────────────────────────┐
         │               ROW COMPUTE UNIT             │
         │                                            │
