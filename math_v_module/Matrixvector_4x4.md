@@ -70,7 +70,7 @@
 
 
                  ┌───────────────────────────┐
-                 │   Packed Matrix T[511:0] │
+                 │   Packed Matrix T[511:0]  │
                  └─────────────┬─────────────┘
                                │
                         UNPACK MATRIX
@@ -101,12 +101,12 @@
         │                                            │
         │            PIPELINE REGISTER               │
         │                                            │
-        │      mul0+mul1 → sum01                    │
-        │      mul2+mul3 → sum23                    │
+        │      mul0+mul1 → sum01                     │
+        │      mul2+mul3 → sum23                     │
         │                                            │
         │            PIPELINE REGISTER               │
         │                                            │
-        │      sum01 + sum23 → final_sum            │
+        │      sum01 + sum23 → final_sum             │
         └────────────────────────────────────────────┘
 
 
@@ -115,7 +115,7 @@
                  │ result[127:0]             │
                  └───────────────────────────┘
 
-                         T[i][0] ──×──┐
+        T[i][0] ──×──┐
                      │
         pt[0] ───────┘
 
