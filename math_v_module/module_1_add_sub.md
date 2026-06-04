@@ -84,7 +84,54 @@
 
 The module extracts IEEE-754 fields from the inputs, aligns exponents, performs mantissa addition/subtraction, normalizes the result, and repacks it into 32-bit floating-point format.
 
-![RTL/ block diagram ](rtl_mod1.png)
+                ┌────────────────────┐
+                │     INPUT A        │
+                │ Sign Exp Mantissa  │
+                └─────────┬──────────┘
+                          │
+                ┌────────────────────┐
+                │     INPUT B        │
+                │ Sign Exp Mantissa  │
+                └─────────┬──────────┘
+                          │
+                          ▼
+               ┌──────────────────────┐
+               │ SIGN CONTROL (op)    │
+               │ sign_b = b[31]^op    │
+               └─────────┬────────────┘
+                         │
+                         ▼
+            ┌────────────────────────────┐
+            │ EXPONENT COMPARATOR        │
+            │ Find Larger Exponent       │
+            └──────────┬─────────────────┘
+                       │
+                       ▼
+            ┌────────────────────────────┐
+            │ MANTISSA ALIGNMENT         │
+            │ Right Shift Smaller Mant.  │
+            └──────────┬─────────────────┘
+                       │
+                       ▼
+            ┌────────────────────────────┐
+            │ ADD / SUBTRACT MANTISSA    │
+            └──────────┬─────────────────┘
+                       │
+                       ▼
+            ┌────────────────────────────┐
+            │ NORMALIZATION UNIT         │
+            │ Priority Encoder + Shift   │
+            └──────────┬─────────────────┘
+                       │
+                       ▼
+            ┌────────────────────────────┐
+            │ RESULT PACKING             │
+            │ sign + exponent + mantissa │
+            └──────────┬─────────────────┘
+                       │
+                       ▼
+                 FP32 RESULT
+
 
 
 ## Working/usage of module
