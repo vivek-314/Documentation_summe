@@ -454,4 +454,6 @@ Design becomes impractical for large matrices.
 
 
 Output
-<img width="1138" height="208" alt="image" src="https://github.com/user-attachments/assets/ccb2ce74-ecb4-4881-a831-838074fcdda5" />
+<img width="1626" height="228" alt="image" src="https://github.com/user-attachments/assets/88789c5e-dabf-40e7-8e93-aa88c0d072e4" />
+
+
