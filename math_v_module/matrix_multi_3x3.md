@@ -283,13 +283,6 @@ Design becomes impractical for large matrices.
                 forever #5 clk = ~clk;
             end
 
-
-            // MONITOR
-            // =========================================================
-            initial begin
-                $monitor("TIME=%0t RESULT=%h", $time, Result);
-            end
-
             // =========================================================
             // TEST CASES
 
