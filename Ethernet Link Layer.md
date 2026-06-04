@@ -10,7 +10,7 @@ Ethernet operated at
   - Data link layer
 of Open Systems Interconnection (OSI) model which is a standardize 7 stage model use for networking functions, allowing diverse communication systems to communicate.
 
-Daily Devices whicih use ethernet are computers, routers, FPGA boards etc.
+Daily Devices which use ethernet are computers, routers, FPGA boards etc.
 
 ## Why ethernet is used
 
