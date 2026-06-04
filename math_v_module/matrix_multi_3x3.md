@@ -180,6 +180,46 @@ At each Clock Edge, What Happens Inside the Hardware?
 - **Clock Edge 3** 
     - Stage 3 Ends: The final addition completes. The 9 final answers are captured into sum_final[i][j] and instantly appear at the Result output pin.
 
+            A[i][0] ──┐
+                      ▼
+                   ┌─────┐
+            B[0][j]│ MUL │── mul0
+                   └─────┘
+
+
+            A[i][1] ──┐
+                      ▼
+                   ┌─────┐
+            B[1][j]│ MUL │── mul1
+                   └─────┘
+
+
+            A[i][2] ──┐
+                      ▼
+                   ┌─────┐
+            B[2][j]│ MUL │── mul2
+                   └─────┘
+
+              ┌──────────────────┐
+              │ PIPELINE REG     │
+              └──────────────────┘
+                   mul0 ──┐
+                           ▼
+                        ┌─────┐
+                   mul1 │ ADD │── sum01
+                        └─────┘
+          ┌──────────────────┐
+          │ PIPELINE REG     │
+          └──────────────────┘
+              sum01 ──┐
+                       ▼
+                    ┌─────┐
+               mul2 │ ADD │── final_sum
+                    └─────┘
+          ┌──────────────────┐
+          │ OUTPUT REGISTER  │
+          └──────────────────┘
+      
 ## Advantages
 
 **1. Parallel Computation**
