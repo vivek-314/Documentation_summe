@@ -39,7 +39,7 @@ It is responsible for
 
 Data at this layer is refered as **Frame**
 
-### **Ethernet Fream Structure**
+### **Ethernet Frame Structure**
 ![Frame Strcture](framestructure.png)
 
 Let's us look at frame structure one by one.
