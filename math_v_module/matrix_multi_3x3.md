@@ -79,21 +79,41 @@ Verilog cannot easily pass the 2D arrays across the module port easily the modul
 ## Block Diagram
 
 
-        UNPACKING LAYER              STAGE 1                     STAGE 2                     STAGE 3
-     (Combinational Nets)       (Multiplication)           (First Addition)             (Final Addition)
- 
-       A_unpacked[i][0] ──┐
-                          ├─► [ fp32_mult0 ] ── mul0 ──► [ mul0_reg ] ──┐
-       B_unpacked[0][j] ──┘                                             ├──► [ add_sub_0 ] ── sum01_wire
-                                                                        │
-       A_unpacked[i][1] ──┐                                             │
-                          ├─► [ fp32_mult1 ] ── mul1 ──► [ mul1_reg ] ──┘
-       B_unpacked[1][j] ──┘
-                                                                                          ┌──► [ sum_final[i][j] ]
-                                                                                          │     (To Result Packing)
-       A_unpacked[i][2] ──┐                                                               │
-                          ├─► [ fp32_mult2 ] ── mul2 ──► [ mul2_reg ] ──► [ mul2_delay ] ─┼──► [ add_sub_1 ]
-       B_unpacked[2][j] ──┘                                                                     sum_final_wire
+                ┌──────────────────────┐
+                │   INPUT MATRIX A     │
+                │      288 bits        │
+                └──────────┬───────────┘
+                           │
+                ┌──────────────────────┐
+                │   INPUT MATRIX B     │
+                │      288 bits        │
+                └──────────┬───────────┘
+                           │
+                           ▼
+              ┌──────────────────────────┐
+              │     UNPACKING UNIT       │
+              │ Convert packed → 2D      │
+              │ A_unpacked[i][j]         │
+              │ B_unpacked[i][j]         │
+              └──────────┬───────────────┘
+                         │
+                         ▼
+          ┌─────────────────────────────────┐
+          │      MATRIX COMPUTE ARRAY       │
+          │                                 │
+          │  9 Parallel Compute Units       │
+          │                                 │
+          │  Each computes one C[i][j]      │
+          └──────────┬──────────────────────┘
+                     │
+                     ▼
+          ┌─────────────────────────────────┐
+          │        PACKING UNIT             │
+          │ Convert 2D result → 288 bits    │
+          └──────────┬──────────────────────┘
+                     │
+                     ▼
+                  RESULT
                                                                                       
 
 
