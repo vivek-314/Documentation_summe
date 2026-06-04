@@ -206,10 +206,171 @@ Here we have not used (((mult0+mult1)+mult2)+mult3) other wise we need to shift 
 - using module f32 and add_sub and using them in loop speeds up process.
 
 ## Limitation
-
-**1. FPGA resources ussed in lareg quntity.
+**1. FPGA resources ussed in lareg quntity.**
 - 16 multipliers and 12 adders are used.
 
 **2. high power consumption**
 - many parallel blocks active simultaneouly.
 
+## Testbench 
+
+`timescale 1ns / 1ps
+
+    module tb_MatrixVectorMultiply4x4;
+
+        reg clk;
+        reg  [511:0] T;
+        reg  [127:0] pt;
+    
+        wire [127:0] result;
+
+        MatrixVectorMultiply4x4 uut (.clk(clk),.T(T),.pt(pt),.result(result));
+
+        // CLOCK GENERATION
+
+        initial begin
+            clk = 0;
+            forever #5 clk = ~clk;
+        end
+
+        // TEST CASES
+        // =========================================================
+        initial begin
+
+        // TEST 1 : Identity Matrix × Vector
+        // Expected Result = Same Vector
+
+            // Identity Matrix
+
+            T = {
+
+                32'h3F800000, 32'h00000000, 32'h00000000, 32'h00000000,
+                32'h00000000, 32'h3F800000, 32'h00000000, 32'h00000000,
+                32'h00000000, 32'h00000000, 32'h3F800000, 32'h00000000,
+                32'h00000000, 32'h00000000, 32'h00000000, 32'h3F800000
+
+            };
+
+            // Vector [1 2 3 1]
+
+            pt = {
+                32'h3F800000, // 1
+                32'h40000000, // 2
+                32'h40400000, // 3
+                32'h3F800000  // 1
+            };
+
+            #100;
+
+        // TEST 2 : Zero Matrix × Vector
+        // Expected Result = Zero Vector
+
+            T = 0;
+
+            pt = {
+                32'h3F800000,
+                32'h40000000,
+                32'h40400000,
+                32'h3F800000
+            };
+    
+            #100;
+
+        // TEST 3 : Normal Matrix × Vector
+
+            // Matrix
+            //
+            // [1  2  3  4 ]
+            // [5  6  7  8 ]
+            // [9 10 11 12 ]
+            // [13 14 15 16]
+
+            T = {
+
+                32'h3F800000, // 1
+                32'h40000000, // 2
+                32'h40400000, // 3
+                32'h40800000, // 4
+
+                32'h40A00000, // 5
+                32'h40C00000, // 6
+                32'h40E00000, // 7
+                32'h41000000, // 8
+
+                32'h41100000, // 9
+                32'h41200000, // 10
+                32'h41300000, // 11
+                32'h41400000, // 12
+
+                32'h41500000, // 13
+                32'h41600000, // 14
+                32'h41700000, // 15
+                32'h41800000  // 16
+            };
+
+            // Vector [1 2 3 4]
+
+            pt = {
+
+                32'h3F800000, // 1
+                32'h40000000, // 2
+                32'h40400000, // 3
+                32'h40800000  // 4
+            };
+
+            #100;
+
+        // TEST 4 : Positive and Negative Numbers
+
+            // Matrix
+            //
+            // [-1 -2 -3 -4]
+            // [ 5  6  7  8]
+            // [-9 -10 -11 -12]
+            // [13 14 15 16]
+
+            T = {
+    
+                32'hBF800000, // -1
+                32'hC0000000, // -2
+                32'hC0400000, // -3
+                32'hC0800000, // -4
+
+                32'h40A00000, // 5
+                32'h40C00000, // 6
+                32'h40E00000, // 7
+                32'h41000000, // 8
+
+                32'hC1100000, // -9
+                32'hC1200000, // -10
+                32'hC1300000, // -11
+                32'hC1400000, // -12
+
+                32'h41500000, // 13
+                32'h41600000, // 14
+                32'h41700000, // 15
+                32'h41800000  // 16
+            };
+
+            // Vector [1 -2 3 -4]
+
+            pt = {
+
+                32'h3F800000, // 1
+                32'hC0000000, // -2
+                32'h40400000, // 3
+                32'hC0800000  // -4
+            };
+
+            #100;
+
+            $finish;
+
+        end
+
+    endmodule
+
+    
+Output
+
+<img width="1134" height="206" alt="image" src="https://github.com/user-attachments/assets/cf408bc4-50a9-47f4-8336-fd8002196168" />
