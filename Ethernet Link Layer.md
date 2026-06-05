@@ -143,3 +143,61 @@ Features
   - Packet sniffing
   - Custom protocols
   - Network analysis
+
+### Example Socket Creation
+
+    import socket 
+    
+    sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(3))
+
+Here 
+- **AF_PACKET:** Access link layer packets directly
+- **SOCK_RAW:** Raw socket type
+- **socket.ntohs(3):** Receives all Ethernet protocols
+
+To run this we need root access and administrator privileges 
+
+### Windows Socket Settings
+
+Windows does not support AF_Packet. It instead uses AF INET
+
+Mostly working on 3-layer - IP Layer 
+
+for raw ethernet access Npcan or WinPcap drivers are used.
+
+### Example socket creation.
+
+    import socket 
+        
+    sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_IP)
+
+Here,
+-  `AF_INET`: Uses IPv4 addressing
+- `SOCK_RAW`: Creates a raw socket
+- `IPPROTO_IP` Accesses IP packets directly
+
+Used mainly for packet monitoring and analysis
+
+Requires Administrator privileges in Windows
+
+### macOS Socket Settings
+
+macOS uses BSD socket implementation.
+
+Raw sockets are supported but have limited Ethernet frame access compared to Linux.
+
+### Example socket creation.
+
+    import socket 
+    
+    sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+
+Here,
+
+- `AF_INET`: Uses IPv4 network communication
+- `SOCK_RAW`: Creates a raw socket connection
+- `IPPROTO_TCP`: Captures TCP protocol packets
+
+BSD sockets are used internally in macOS
+
+Administrator privileges may be required
