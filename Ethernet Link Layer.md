@@ -201,3 +201,6 @@ Here,
 BSD sockets are used internally in macOS
 
 Administrator privileges may be required
+
+# Snippets for PC Side Python Code
+
