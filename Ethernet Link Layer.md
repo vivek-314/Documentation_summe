@@ -130,3 +130,16 @@ Raw sockets allow programmers to:
 
 ## OS specific Socket settings
 
+Different operating systems may require specific socket configurations while working with Ethernet communication and raw sockets.
+
+### Linux socket settings
+
+Linux provides direct support for raw Ethernet frames using **AF_PACKET**.
+
+Features
+- Direct access to Ethernet frames
+- Can send and receive Layer-2 packets
+- Mostly used for:
+  - Packet sniffing
+  - Custom protocols
+  - Network analysis
