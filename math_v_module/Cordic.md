@@ -334,7 +334,68 @@ similarly this iterative proces will repeat, shift angle will become smaller, co
 | 30 | 9.313225746154785e-10 | 5.34e-08 | 1.1644353449 | 1.1644353462 | -3.22e-08 |
 | 31 | 4.656612873077393e-10 | 2.67e-08 | 1.1644353454 | 1.1644353456 | -5.5e-09 |
 
+## Testbench 
 
+          `timescale 1ns / 1ps
+
+          module tb_cordic;
+
+              parameter BW = 32;
+
+              reg master_clk;
+              reg signed [31:0] angle;
+              reg signed [BW-1:0] Xin;
+              reg signed [BW-1:0] Yin;
+
+              wire signed [BW:0] Xout;
+              wire signed [BW:0] Yout;
+
+              Cordic uut (.master_clk(master_clk),.angle(angle),.Xin(Xin),.Yin(Yin),.Xout(Xout),.Yout(Yout));
+
+              // Clock Generation
+              initial begin
+                  master_clk = 0;
+                  forever #5 master_clk = ~master_clk;
+              end
+    
+              initial begin
+
+                  // Test 1 : Rotate (1,0) by 45 degrees
+        
+                  // Fixed-point representation of 45 degree
+                  // Based on your angle LUT scaling
+                  angle = 32'b00100000000000000000000000000000;
+
+                  // Input Vector
+                  Xin = 32'd1 << 16;   // Q16 format => 1.0
+                  Yin = 0;
+
+                  #400;
+        
+                  // Test 2 : Rotate (1,0) by -45 degrees
+
+                  angle = 32'b11100000000000000000000000000000;
+
+                  Xin = 32'd1 << 16;
+                  Yin = 0;
+          
+                  #400;
+
+                  // Test 3 : Rotate (0,1) by 90 degrees
+
+                  angle = 32'b01000000000000000000000000000000;
+
+                  Xin = 0;
+                  Yin = 32'd1 << 16;
+
+                  #1000;
+                  $finish;
+
+              end
+          Output 
+
+          
+<img width="1504" height="425" alt="image" src="https://github.com/user-attachments/assets/5e2bc49f-145e-4fc6-9db9-a95057182826" />
 
 
 
