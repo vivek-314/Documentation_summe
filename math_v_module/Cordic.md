@@ -89,6 +89,7 @@
     endmodule
 
 This module implements the CORDIC algorithm in rotational mode to rotate the vector.
+
 Takes input xin yin and a angle to which it will be rotatted and gives output xout yout.
 
 It used add_sub modules and shift operation for this process instead of multipliers because it uses large FPGA resources.
@@ -96,6 +97,7 @@ It used add_sub modules and shift operation for this process instead of multipli
 Mathematically it is
 
     Xout = Xin​cos(θ) − Yin​sin(θ)
+    
     ​Yout​​ = Xin​sin(θ) + Yin​cos(θ)
     
 
@@ -147,6 +149,7 @@ Mathematically it is
     Output Rotated Vector
 
 This module uses 3 arrats 
+
 - x[i] --> x value at stage `i`
 - y[i] --> y value at stage `i`
 - z[i] --> Angle remaining after stage `i`
@@ -186,22 +189,16 @@ This gradually rotates the vector toward the target angle.
 
 ### Pipeline Operation
 
-The design is pipelined.
+The design is pipelined. Each stage performs: one micro rotation & one angle update
 
-Each stage performs:
-
-one micro rotation & 
-one angle update
-
-After every clock cycle:
-
-data moves to the next stage.
+After every clock cycle: data moves to the next stage.
 
 Latency is equal to the number of stages.
 
 In this design:
 
 32 stages
+
 32 clock cycle latency
 
 ### Example 
@@ -212,90 +209,115 @@ final output should be approx (0.707,0.707), absolute value by matematical formu
 
 
 `Stage 0 : `
+
 Step 1: check angle sign.
+
 x0 = +45
+
 positive angle, positive direction rotation.
 
 step 2:
+
 for stage 0 shift amt = 2^-0 = 1
 
 x_shift = x0 >> 0
+
 y_shift = y0 >> 0
 
 cordic equation:
 
-x1= x0 - y_shift
-y1= y0 + x_shift
-z1= z0 - atan(1)   [atan(1) = 45]
+          x1= x0 - y_shift
+          y1= y0 + x_shift          
+          z1= z0 - atan(1)   [atan(1) = 45]
 
 updated values:
 
 x1 = 1
+
 y1 = 1
+
 z1 = 0
 
 `Stage 1 :`
+
 Step 1: Shift operation 
+
 for stage 1 shift amt = 2^-1 = 0.5
 
 x_shift = x0 >> 1
+
 y_shift = y0 >> 1
 
 x_shift = 0.5 
+
 y_shift = 0.5
 
 cordic equaltions:
 
-x2= x1 - y_shift
-y2= y1 + x_shift
-z2= z1 - atan(0.5)  
+          x2= x1 - y_shift
+          y2= y1 + x_shift
+          z2= z1 - atan(0.5)  
 
 substituting values 
 
 x2= 1 - 0.5 = 0.5
+
 y2= 1 + 0.5 = 1.5
+
 z2= 0 - 26.565
 
 updated values:
 
 x2 = 0.5 
+
 y2 = 1.5
+
 z2 = -26.565
 
 here z2 becomes nagtive so now the angle will change direction of rotation from positive to negative.
+
 negative z2 shows that the vector was rotated little too much.
 
 `Stage 2 :`
+
 Step 1: Shift operation 
+
 for stage 2 shift amt = 2^-2 = 0.25
 
 x_shift = x0 >> 2
+
 y_shift = y0 >> 2
 
 x_shift = 0.125
+
 y_shift = 0.375
 
 cordic equaltions:
 
 angle is negative opposite rotation,
 
-x2= x1 + y_shift
-y2= y1 - x_shift
-z2= z1 + atan(0.5)  
+          x2= x1 + y_shift
+          y2= y1 - x_shift
+          z2= z1 + atan(0.5)  
 
 substituting values 
 
 x2= 0.5 + 0.375 = 0.875
+
 y2= 1.5 - 0.125 = 1.375
+
 z2= -26.565 + 14.036 = -12.529
 
 updated values:
 
 x2 = 0.875
+
 y2 = 1.375
+
 z2 = -12.529
 
 again the angle is -vee but magnitude is reduced representing it is converging towards the target.
+
 similarly this iterative proces will repeat, shift angle will become smaller, correction angle becomes smaller and the output becomes more accurate.
 
 | Iteration | Shift Value (2^-i) | Rotation Angle (deg) | X Value | Y Value | Remaining Angle Z |
