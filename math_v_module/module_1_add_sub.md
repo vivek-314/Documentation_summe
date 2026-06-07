@@ -272,8 +272,8 @@ Test cases used:
 
 # Optimising the code 
 
-    - We have used a long chain of if-else instead we can use a leading user detector or tree based priority encoder.
     - Add piplining divite the combinational design into stages by adding registe rin between 
+    `adder_tree.v` uses PIPELINED IEEE 754 ADDER TREE
 
     - Handle special IEEE 754 cases - NaN and Infinity. 
     eg. if exponenet is 255 it will be marked infinity or NaN. 
