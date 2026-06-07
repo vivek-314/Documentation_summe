@@ -414,7 +414,8 @@ similarly this iterative proces will repeat, shift angle will become smaller, co
                   $finish;
 
               end
-          Output 
+
+Output 
 
           
 <img width="1504" height="425" alt="image" src="https://github.com/user-attachments/assets/5e2bc49f-145e-4fc6-9db9-a95057182826" />
