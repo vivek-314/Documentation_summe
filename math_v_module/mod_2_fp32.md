@@ -230,5 +230,4 @@ Testbench used
 ## Optimizating code
 - Split into stages
 - Include IEEE rounding
-- Underflow and overflow detection
 - We can use Wallace tree multiplier to lower delay
