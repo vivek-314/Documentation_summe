@@ -210,13 +210,13 @@ final output should be approx (0.707,0.707), absolute value by matematical formu
 
 `Stage 0 : `
 
-Step 1: check angle sign.
+**Step 1: check angle sign.**
 
 x0 = +45
 
 positive angle, positive direction rotation.
 
-step 2:
+**step 2:**
 
 for stage 0 shift amt = 2^-0 = 1
 
@@ -230,7 +230,7 @@ cordic equation:
           y1= y0 + x_shift          
           z1= z0 - atan(1)   [atan(1) = 45]
 
-updated values:
+**updated values:**
 
 x1 = 1
 
@@ -240,7 +240,7 @@ z1 = 0
 
 `Stage 1 :`
 
-Step 1: Shift operation 
+**Step 1: Shift operation **
 
 for stage 1 shift amt = 2^-1 = 0.5
 
@@ -252,13 +252,13 @@ x_shift = 0.5
 
 y_shift = 0.5
 
-cordic equaltions:
+**cordic equaltions:**
 
           x2= x1 - y_shift
           y2= y1 + x_shift
           z2= z1 - atan(0.5)  
 
-substituting values 
+**substituting values **
 
 x2= 1 - 0.5 = 0.5
 
@@ -266,7 +266,7 @@ y2= 1 + 0.5 = 1.5
 
 z2= 0 - 26.565
 
-updated values:
+**updated values:**
 
 x2 = 0.5 
 
@@ -280,7 +280,7 @@ negative z2 shows that the vector was rotated little too much.
 
 `Stage 2 :`
 
-Step 1: Shift operation 
+**Step 1: Shift operation **
 
 for stage 2 shift amt = 2^-2 = 0.25
 
@@ -292,7 +292,7 @@ x_shift = 0.125
 
 y_shift = 0.375
 
-cordic equaltions:
+**cordic equaltions:**
 
 angle is negative opposite rotation,
 
@@ -300,7 +300,7 @@ angle is negative opposite rotation,
           y2= y1 - x_shift
           z2= z1 + atan(0.5)  
 
-substituting values 
+**substituting values **
 
 x2= 0.5 + 0.375 = 0.875
 
@@ -308,7 +308,7 @@ y2= 1.5 - 0.125 = 1.375
 
 z2= -26.565 + 14.036 = -12.529
 
-updated values:
+**updated values:**
 
 x2 = 0.875
 
